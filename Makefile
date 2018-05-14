@@ -3,7 +3,7 @@ VERSION=$(shell perl6 -Ilib -MAlgorithm::Heap::Binary -e 'say Algorithm::Heap::B
 doc: lib/Algorithm/Heap/Binary.pm6
 	echo "[![Build Status](https://travis-ci.org/cono/p6-algorithm-heap-binary.svg?branch=master)](https://travis-ci.org/cono/p6-algorithm-heap-binary)" > README.md
 	echo "" >> README.md
-	perl6 --doc=Markdown lib/Algorithm/Heap/Binary.pm6 >> README.md
+	perl6 -Ilib --doc=Markdown lib/Algorithm/Heap/Binary.pm6 >> README.md
 
 test:
 	prove --exec 'perl6 -Ilib' -r t

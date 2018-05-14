@@ -186,4 +186,202 @@ class Algorithm::Heap::Binary:ver<0.0.1>:auth<cono "q@cono.org.ua"> does Algorit
     }
 }
 
+=begin pod
+
+=head1 NAME
+
+Algorithm::Heap::Binary - Implementation of a BinaryHeap
+
+=head1 SYNOPSIS
+
+=begin code
+
+    use Algorithm::Heap::Binary;
+
+    my Algorithm::Heap::Binary $heap .= new(
+        comparator => * <=> *,
+        3 => 'c',
+        2 => 'b',
+        1 => 'a'
+    );
+
+    $heap.size.say; # 3
+
+    # heap-sort example
+    $heap.delete-min.value.say; # a
+    $heap.delete-min.value.say; # b
+    $heap.delete-min.value.say; # c
+
+=end code
+
+=head1 DESCRIPTION
+
+Algorithm::Heap::Binary provides to you BinaryHeap data structure with basic
+heap operations defined in Algorithm::Heap role:
+
+=head2 peek
+
+find a maximum item of a max-heap, or a minimum item of a min-heap,
+respectively
+
+=head2 push
+
+returns the node of maximum value from a max heap [or minimum value from a min
+heap] after removing it from the heap
+
+=head2 pop
+
+removing the root node of a max heap [or min heap]
+
+=head2 replace
+
+pop root and push a new key. More efficient than pop followed by push, since
+only need to balance once, not twice, and appropriate for fixed-size heaps
+
+=head2 is-empty
+
+return true if the heap is empty, false otherwise
+
+=head2 size
+
+return the number of items in the heap
+
+=head2 merge
+
+joining two heaps to form a valid new heap containing all the elements of both,
+preserving the original heaps
+
+=head1 METHODS
+
+=head2 Constructor
+
+BinaryHeap contains C<Pair> objects and define order between C<Pair.key> by the
+comparator. Comparator - is a C<Code> which defines how to order elements
+internally. With help of the comparator you can create Min-heap or Max-heap.
+
+=item empty constructor
+
+=begin code
+
+    my $heap = Algorithm::Heap::Binary.new;
+
+=end code
+
+Default comparator is: C<* <=> *>
+
+=item named constructor
+
+=begin code
+
+    my $heap = Algorithm::Heap::Binary.new(comparator => -> $a, $b {$b cmp $a});
+
+=end code
+
+=item constructor with heapify
+
+=begin code
+
+    my @numbers = 1 .. *;
+    my @letters = 'a' .. *;
+    my @data = @numbers Z=> @letters;
+
+    my $heap = Algorithm::Heap::Binary.new(comparator => * <=> *, |@data[^5]);
+
+=end code
+
+This will automatically heapify data for you.
+
+=head2 clone
+
+Clones heap object for you with all internal data.
+
+=head2 is-empty
+
+Returns C<Bool> result as to empty Heap or not.
+
+=head2 size
+
+Returns C<Int> which corresponds to amount elements in the Heap data structure.
+
+=head2 push(Pair)
+
+Adds new Pair to the heap and resort it.
+
+=head2 insert(Pair)
+
+Alias for push method.
+
+=head2 peek
+
+Returns C<Pair> from the top of the Heap.
+
+=head2 find-max
+
+Just an syntatic alias for peek method.
+
+=head2 find-min
+
+Just an syntatic alias for peek method.
+
+=head2 pop
+
+Returns C<Piar> from the top of the Heap and also removes it from the Heap.
+
+=head2 delete-max
+
+Just an syntatic alias for pop method.
+
+=head2 delete-min
+
+Just an syntatic alias for pop method.
+
+=head2 replace(Pair)
+
+Replace top element with another Pair. Returns replaced element as a result.
+
+=head2 merge(Algorithm::Heap)
+
+Construct a new Heap merging current one and passed to as an argument.
+
+=head2 Seq
+
+Returns C<Seq> of Heap elements. This will clone the data for you, so initial
+data structure going to be untouched.
+
+=head2 Str
+
+Prints internal representation of the Heap (as an C<Array>).
+
+=head2 iterator
+
+Method wich provides iterator (C<role Iterable>). Will clone current Heap for
+you.
+
+=head2 sift-up
+
+Internal method to make sift-up operation.
+
+=head2 sift-down
+
+Internal method to make sift-down operation.
+
+=head1 AUTHOR
+
+L<cono|mailto:q@cono.org.ua>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright 2018 cono
+
+This library is free software; you can redistribute it and/or modify it under
+the Artistic License 2.0.
+
+=head1 LINKS
+
+=item1 L<https://en.wikipedia.org/wiki/Heap_(data_structure)>
+
+=item1 L<https://en.wikipedia.org/wiki/Binary_heap>
+
+=end pod
+
 # vim: ft=perl6
